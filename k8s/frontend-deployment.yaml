@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flask-frontend
+  template:
+    metadata:
+      labels:
+        app: flask-frontend
+    spec:
+      containers:
+      - name: flask-frontend
+        image: docker.io/sky90/frontblog:latest
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: BACKEND_URL
+          value: "http://backend:5000/posts"
+        ports:
+        - containerPort: 80
