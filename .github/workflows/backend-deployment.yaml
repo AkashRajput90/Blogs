@@ -35,7 +35,12 @@ jobs:
     - name: Get AKS credentials
       run: az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 
-    - name: Deploy to AKS
+    - name: Deploy MongoDB
+      run: |
+        kubectl apply -f mongodb-deployment.yaml
+        kubectl apply -f mongodb-service.yaml
+
+    - name: Deploy Backend to AKS
       run: |
         kubectl apply -f backend-deployment.yaml
         kubectl apply -f backend-service.yaml
