@@ -1,0 +1,26 @@
+name: Database Deployment
+
+on:
+  workflow_run:
+    workflows: ["Backend Deployment"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Kubectl
+      uses: azure/setup-kubectl@v1
+
+    - name: Get AKS credentials
+      run: az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
+
+    - name: Deploy MongoDB to AKS
+      run: |
+        kubectl apply -f mongodb-deployment.yaml
+        kubectl apply -f mongodb-service.yaml
