@@ -1,10 +1,10 @@
-name: Deploy Backend to AKS
+name: Backend Deployment
 
 on:
-  push:
-    branches:
-      - development
-      - main
+  workflow_run:
+    workflows: ["Provision Infrastructure", "Frontend Deployment"]
+    types:
+      - completed
 
 jobs:
   build:
@@ -34,11 +34,6 @@ jobs:
 
     - name: Get AKS credentials
       run: az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
-
-    - name: Deploy MongoDB
-      run: |
-        kubectl apply -f mongodb-deployment.yaml
-        kubectl apply -f mongodb-service.yaml
 
     - name: Deploy Backend to AKS
       run: |
