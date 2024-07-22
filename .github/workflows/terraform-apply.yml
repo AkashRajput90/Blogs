@@ -1,4 +1,4 @@
-  name: Apply Terraform Configuration
+name: Provision Infrastructure
 
 on:
   push:
@@ -7,6 +7,7 @@ on:
 
 jobs:
   terraform:
+    name: Set up and deploy Terraform
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +19,11 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
-
+      
     - name: Terraform Apply
-      run: terraform apply -auto-approve
       env:
         ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
         ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
         ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
         ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
+      run: terraform apply -auto-approve
