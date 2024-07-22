@@ -1,9 +1,8 @@
-name: Deploy Frontend to AKS
+name: Frontend Deployment
 
 on:
   push:
     branches:
-      - development
       - main
 
 jobs:
@@ -35,7 +34,7 @@ jobs:
     - name: Get AKS credentials
       run: az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 
-    - name: Deploy to AKS
+    - name: Deploy Frontend to AKS
       run: |
         kubectl apply -f frontend-deployment.yaml
         kubectl apply -f frontend-service.yaml
