@@ -19,5 +19,8 @@ spec:
         ports:
         - containerPort: 5000
         env:
-        - name: MONGO_URL
-          value: "mongodb://mongo-service:27017/blogdatabase"
+        - name: MONGO_URI
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: MONGO_URI
