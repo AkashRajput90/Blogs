@@ -36,6 +36,8 @@ jobs:
       run: az aks get-credentials --resource-group myResourceGroup --name myAKSCluster
 
     - name: Deploy Backend to AKS
+      env:
+        MONGO_URI: ${{ secrets.MONGO_URI }}
       run: |
         kubectl apply -f backend-deployment.yaml
         kubectl apply -f backend-service.yaml
